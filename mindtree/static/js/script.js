@@ -255,14 +255,19 @@ $(function() {
     const neg_ratio = sentimentArray[0]/sum
     const neu_ratio = sentimentArray[1]/sum
     const pos_ratio = sentimentArray[2]/sum
+    const max = Math.max(neg_ratio, neu_ratio, pos_ratio)
 
-    console.log(pos_ratio)
     console.log(neg_ratio)
+    console.log(neu_ratio)
+    console.log(pos_ratio)
+    console.log(sentimentArray)
+    console.log(pos_ratio)
+    console.log(sum)
 
-    if (neg_ratio>0.333){
+    if (neg_ratio===max){
         $(document.body).toggleClass('negative')
         $('#sentiment').text('\'부정\'')
-    }else if(pos_ratio>0.333){
+    }else if(pos_ratio===max){
         $(document.body).toggleClass('positive')
         $('#sentiment').text('\'긍정\'')
 

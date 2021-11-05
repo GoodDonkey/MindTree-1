@@ -40,12 +40,22 @@ class User(db.Model, UserMixin):
         return f"User('{self.id}', '{self.username}', '{self.email}')"
 
 
+class CustomNow(datetime):
+    """ 기존에 시간 관련 칼럼에 한국 시간대를 적용하기 위해
+    datetime.now(timezone('Asia/Seoul'))로 넣어봤으나, 시간이 바뀌어 들어가긴 하는데 제대로 안바뀜.
+    또한, pagination등을 할 때 datetime객체(?)로 인식이 안됨. -> now()로 메서드를 실행해서 넣어서 그런듯(...라고 예상)
+    그래서 메서드를 직접 실행하지 않고 전달하기 위해 timezone 정보를 오버라이딩해서 CustomNow.now를 정의하여 넣어주니까 정상작동 되었음."""
+    @classmethod
+    def now(cls, tz=timezone('Asia/Seoul')):
+        return super().now()
+
+
 class Post(db.Model):
     id = db.Column(db.Integer, primary_key=True)  # 자동 증가
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)  # 참조: 'author'키로
     title = db.Column(db.String(100), nullable=False)
-    pub_date = db.Column(db.DateTime, nullable=False, default=datetime.now(timezone('Asia/Seoul')))  # 자동 입력됨
-    last_updated = db.Column(db.DateTime, nullable=True, default=datetime.now(timezone('Asia/Seoul')), onupdate=datetime.now(timezone('Asia/Seoul')))
+    pub_date = db.Column(db.DateTime, nullable=False, default=CustomNow.now)  # 자동 입력됨
+    last_updated = db.Column(db.DateTime, nullable=True, default=CustomNow.now, onupdate=CustomNow.now)
     ocr_text = db.Column(db.String(500), nullable=False)
     sentiment = db.Column(db.JSON, nullable=False)
     word_cloud = db.Column(db.String(100), nullable=False)
@@ -63,8 +73,8 @@ class SeriesPost(db.Model):  # 여러날의 포스트를 분석하여 저장하�
     id = db.Column(db.Integer, primary_key=True)  # 자동 증가
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)  # 참조: 'author'키로
     title = db.Column(db.String(100), nullable=False)
-    pub_date = db.Column(db.DateTime, nullable=False, default=datetime.now(timezone('Asia/Seoul')))  # 자동 입력됨
-    last_updated = db.Column(db.DateTime, nullable=True, default=datetime.now(timezone('Asia/Seoul')), onupdate=datetime.now(timezone('Asia/Seoul')))
+    pub_date = db.Column(db.DateTime, nullable=False, default=CustomNow.now)  # 자동 입력됨
+    last_updated = db.Column(db.DateTime, nullable=True, default=CustomNow.now, onupdate=CustomNow.now)
     ocr_text_bulk = db.Column(db.String(500), nullable=False)
     sentiment = db.Column(db.JSON, nullable=False)
     word_cloud = db.Column(db.String(100), nullable=False)
