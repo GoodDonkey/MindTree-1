@@ -270,7 +270,9 @@ def series_analysis():
         print(start_date, finish_date, type(start_date))
 
         # 날짜에 해당하는 모든 포스트 쿼리
-        posts = Post.query.filter(db.func.date(Post.pub_date).between(str(start_date), str(finish_date))).all()
+        posts = Post.query.filter_by(user_id=current_user.id).filter(db.func.date(Post.pub_date).between(str(
+                start_date),
+                                                                                str(finish_date))).all()
         print(posts, type(posts))
 
         user_id = current_user.id
