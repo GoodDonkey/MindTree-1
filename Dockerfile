@@ -4,7 +4,7 @@ FROM python:3.8.12-buster
 # install VIM
 RUN apt-get update && apt-get install -y vim
 
-# install default jvm
+# install default jdk(konlpy 관련 환경)
 RUN apt-get install -y default-jdk
 
 # define the present working directory
@@ -25,3 +25,5 @@ RUN git clone https://github.com/ssut/py-hanspell.git
 
 # cp py-hanspell package
 RUN cp -r py-hanspell/hanspell .
+
+# 서버 실행 커맨드 생략(python app.py)
