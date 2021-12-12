@@ -82,9 +82,9 @@ class SentimentAnalysis(PathDTO):
 
     def _save_response(self, post_id):
         # sentiment 로컬 저장
-        # with open(self.sentiment_path, "w", encoding='utf-8') as f:
-        #     json.dump(self.json_response, f, indent='\t', ensure_ascii=False)
-        #     print(get_time_str(), "SentimentAnalysis: 감성분석 저장 완료")
+        with open(self.sentiment_path, "w", encoding='utf-8') as f:
+            json.dump(self.json_response, f, indent='\t', ensure_ascii=False)
+            print(get_time_str(), "SentimentAnalysis: 감성분석 저장 완료")
 
         # sentiment DB 저장
         post = Post.query.get_or_404(post_id)

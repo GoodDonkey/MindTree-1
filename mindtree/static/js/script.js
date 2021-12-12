@@ -92,88 +92,6 @@ new Chart(document.getElementById("doughnut-chart"), {
 // });
 
 
-//horizonal stacked bar chrart
-//horizonal stacked bar chart options
-// var barOptions_stacked = {
-//     tooltips: {
-//         enabled: false
-//     },
-//     hover: {
-//         animationDuration: 0
-//     },
-//     scales: {
-//         xAxes: [{
-//             scaleLabel: {
-//                 display: false
-//             },
-//             gridLines: {
-//             },
-//             stacked: true
-//         }],
-//         yAxes: [{
-//             gridLines: {
-//                 display: false,
-//                 color: "#fff",
-//                 zeroLineColor: "#fff",
-//                 zeroLineWidth: 0
-//             },
-//
-//             stacked: true
-//         }]
-//     },
-//     legend: {
-//         display: false
-//     },
-//
-//     animation: {
-//         onComplete: function () {
-//             var chartInstance = this.chart;
-//             var ctx = chartInstance.ctx;
-//             ctx.textAlign = "left";
-//             ctx.font = "9px Open Sans";
-//             ctx.fillStyle = "#fff";
-//
-//             Chart.helpers.each(this.data.datasets.forEach(function (dataset, i) {
-//                 var meta = chartInstance.controller.getDatasetMeta(i);
-//                 Chart.helpers.each(meta.data.forEach(function (bar, index) {
-//                     data = dataset.data[index];
-//                     if (i == 0) {
-//                         ctx.fillText(data, 50, bar._model.y + 4);
-//                     } else {
-//                         ctx.fillText(data, bar._model.x - 25, bar._model.y + 4);
-//                     }
-//                 }), this)
-//             }), this);
-//         }
-//     },
-//     pointLabelFontFamily: "Quadon Extra Bold",
-//     scaleFontFamily: "Quadon Extra Bold",
-// };
-
-//horizontal stacked bar chart
-// new Chart(document.getElementById("Chart1"), {
-//     type: 'horizontalBar',
-//     data: {
-//         labels: [""],
-//         datasets: [{
-//             data: [positive_ratio],
-//             backgroundColor: "rgba(63,203,226,1)",
-//             hoverBackgroundColor: " rgba(46,185,235,1)"
-//         }, {
-//             data: [negative_ratio],
-//             backgroundColor: "rgba(163,103,126,1)",
-//             hoverBackgroundColor: "rgba(140,85,100,1)"
-//         }, {
-//             data: [neutral_ratio],
-//             backgroundColor: "rgba(63,103,126,1)",
-//             hoverBackgroundColor: "rgba(50,90,100,1)"
-//         }]
-//     },
-//     options: barOptions_stacked,
-//
-// });
-
-
 //line chart
 new Chart(document.getElementById("line-chart"), {
     type: 'line',
@@ -186,14 +104,14 @@ new Chart(document.getElementById("line-chart"), {
             backgroundColor: "rgba(46, 255, 53, 0.1)",
             fill: false,
             lineTension: 0
-        },{
+        }, {
             label: '부정',
             data: negArray,
             borderColor: "rgba(246, 26, 26, 0.8)",
             backgroundColor: "rgba(246, 26, 26, 0.1)",
             fill: false,
             lineTension: 0
-        },{
+        }, {
             label: '중립',
             data: neuArray,
             borderColor: "rgba(48, 48, 48, 0.8)",
@@ -248,13 +166,13 @@ new Chart(document.getElementById("line-chart"), {
 // })
 
 
-$(function() {
-    const sum = sentimentArray.reduce((a,b)=>(a+b));
+$(function () {
+    const sum = sentimentArray.reduce((a, b) => (a + b));
 
     // sentimentArray[0]: 부정, [1]: 중립, [2]: 긍정
-    const neg_ratio = sentimentArray[0]/sum
-    const neu_ratio = sentimentArray[1]/sum
-    const pos_ratio = sentimentArray[2]/sum
+    const neg_ratio = sentimentArray[0] / sum
+    const neu_ratio = sentimentArray[1] / sum
+    const pos_ratio = sentimentArray[2] / sum
     const max = Math.max(neg_ratio, neu_ratio, pos_ratio)
 
     console.log(neg_ratio)
@@ -264,18 +182,18 @@ $(function() {
     console.log(pos_ratio)
     console.log(sum)
 
-    if (neg_ratio===max){
+    if (neg_ratio === max) {
         $(document.body).toggleClass('negative')
         $('#sentiment').text('\'부정\'')
-    }else if(pos_ratio===max){
+    } else if (pos_ratio === max) {
         $(document.body).toggleClass('positive')
         $('#sentiment').text('\'긍정\'')
 
-    }else{
+    } else {
         $(document.body).toggleClass('neutral')
         $('#sentiment').text('\'중립\'')
 
     }
     // $("div").css("position", "relative")
 
-    })
+})
